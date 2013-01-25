@@ -1,0 +1,66 @@
+---
+name: uaa
+
+spring_profiles: postgresql
+
+platform: postgresql
+database.driverClassName: org.postgresql.Driver
+database.url: jdbc:postgresql://127.0.0.1:5432/uaadb
+database.username: uaa
+database.password: password
+
+logging:
+  config: config/uaa-log4j.properties
+
+jwt:
+  signing_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIICXgIBAAKBgQDAcxw6ilnDn4FPkl21wA0H3vNyJLtsbwUTvB8Ka61wCVpnoNdI
+        HQOjuCptz32VSCcjYj4djWlMBPTq0Z9svcWi3hnegk/57FFqE3crdTfu9lPZlHyx
+        k3r2aKvnm/dWfpqFXyYsrK8y00bNC8UFY5D/bsl/AvekXizi/hpTLGrp9QIDAQAB
+        AoGABN2kNBK1bE3HHjTsK6E8cxt++j7VgktYTIRwIHpSe0exQnd9mfQp2GTapcYe
+        Pb0CSFG+kk61/9cMPjeomT4/FfDFnQd4AqNYOJUlh0r+AOeSZTLf3ZAYC1osi4o6
+        UH4zrNZenO5ZfxRvxIxR8oDBwjMlbtCDLQwp1BIWhjoGce0CQQD+VGHqef9+hET8
+        MNmFEKz6Qrf0gQX75o+CNsar9qPyeL1/whuhd1wxuXPNeeGViwRXOpmQDL93JySW
+        pzLDHOHDAkEAwbavkGn4Dn/A67CLo6HKAbyoTcgAQyGK3TQhSBaGSCCxdro6m+o3
+        DAYDLOnVrOu5Iwwy3CF/zz/MUliovxnR5wJBAK/oi2UThqzqLZDE9N59fzcFiJi7
+        2Pi3KtFks5tjV1gxPNit2FCg7wqRe9BGGcpGQfVXWblxp8hxMXRmJs0fH+MCQQCw
+        wZmBFLCbykamyPkh3kcNPq/0CULz/m9PWHnl5Wex+OL1iwhfrF9+QR40pUmr94t/
+        R2pBIvAUlApEOVIAzfaRAkEA6mq3t/N5DNIfhYD87+mtwMy5KvWut799bCMpzoWP
+        q5vpbVbOxo/LoUPzeSThspSF/NlVlx6T+HCq+nVcPV3VfA==
+        -----END RSA PRIVATE KEY-----
+
+  verification_key: |
+        -----BEGIN PUBLIC KEY-----
+        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAcxw6ilnDn4FPkl21wA0H3vNy
+        JLtsbwUTvB8Ka61wCVpnoNdIHQOjuCptz32VSCcjYj4djWlMBPTq0Z9svcWi3hne
+        gk/57FFqE3crdTfu9lPZlHyxk3r2aKvnm/dWfpqFXyYsrK8y00bNC8UFY5D/bsl/
+        AvekXizi/hpTLGrp9QIDAQAB
+        -----END PUBLIC KEY-----
+
+  clients: 
+      admin:
+        id: admin
+        authorized-grant-types: client_credentials
+        authorities: clients.read,clients.write,clients.secret,uaa.admin
+        secret: MeM5fER8evgEis
+      login:
+        id: login
+        secret: HZtd2FyZS5jb20iL
+        authorized-grant-types: client_credentials
+        authorities: oauth.login
+      dashboard: 
+        id: dashboard
+        secret: YsLuKyUCZF53kBKS 
+        scope: openid,dashboard.user 
+        authorities: uaa.admin,uaa.resource,tokens.read,scim.read,scim.write 
+        authorized-grant-types: client_credentials,authorization_code,refresh_token 
+  admin: 
+      client_secret: MeM5fER8evgEis
+  login: 
+      client_secret: HZtd2FyZS5jb20iL 
+  scim: 
+      users: 
+        - b29|admin|openid,dashboard.user 
+
+  dump_requests: true

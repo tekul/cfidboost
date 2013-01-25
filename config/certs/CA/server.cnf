@@ -1,0 +1,9 @@
+[dir_sect]
+
+keyUsage=digitalSignature,keyEncipherment
+
+subjectKeyIdentifier=hash
+
+authorityKeyIdentifier=keyid,issuer
+
+extendedKeyUsage=serverAuth

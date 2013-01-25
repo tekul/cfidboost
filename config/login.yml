@@ -1,0 +1,18 @@
+---
+name: login
+
+logging:
+  config: config/login-log4j.properties
+
+uaa:
+  url: https://uaa.cf.com
+  token:
+    url: https://uaa.cf.com/oauth/token
+  login:
+    url: https://uaa.cf.com/authenticate
+  clientinfo:
+    url: https://uaa.cf.com/clientinfo
+
+#require_https: true
+dump_requests: true
+
