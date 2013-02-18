@@ -1,8 +1,10 @@
 ---
 name: login
 
-logging:
-  config: config/login-log4j.properties
+spring_profiles: ldap
+
+ldap.url: ldap://localhost:22389/dc=cloudfoundry,dc=com
+ldap.usersDn: "uid={0},ou=users"
 
 uaa:
   url: https://uaa.cf.com

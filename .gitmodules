@@ -1,6 +1,6 @@
 [submodule "uaa"]
 	path = uaa
-	url = git://github.com/cloudfoundry/uaa.git
+	url = git://github.com/tekul/uaa.git
 [submodule "login-server"]
 	path = login-server
-	url = git://github.com/cloudfoundry/login-server.git
+	url = git://github.com/tekul/login-server.git

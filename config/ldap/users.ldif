@@ -1,0 +1,22 @@
+dn: dc=cloudfoundry,dc=com
+objectClass: dcObject
+objectClass: domain
+dc: cloudfoundry
+
+dn: ou=users,dc=cloudfoundry,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: uid=luke,ou=users,dc=cloudfoundry,dc=com
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: top
+cn: Luke
+uid: luke
+givenName: Luke
+o: MyOrg
+sn: Taylor
+userPassword: {SSHA}uYc0R32rydzGXOuhmUo2kvCfSiR3Lzi3
+
