@@ -17,12 +17,12 @@ psql -d postgres -c "grant all on database uaadb to uaa;"
 
 echo "Building UAA"
 pushd uaa
-mvn install -DskipTests
+mvn clean install -DskipTests
 popd
 
 echo "Building login-server"
 pushd login-server
-mvn install -DskipTests
+mvn clean install -DskipTests
 popd
 
 echo "Copying files to tomcat"

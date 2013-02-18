@@ -16,7 +16,10 @@ if [ ! -d tomcat ]; then
   tar -xzf tomcat.tar.gz
   mv apache-tomcat-7.0.35 tomcat
   cp -f ./config/tomcat.server.xml ./tomcat/conf/server.xml
-  rm -R tomcat/webapps/ROOT
 fi
+
+
+rm -R tomcat/webapps/ROOT
+rm -R tomcat/webapps/uaa
 
 sh ./tomcat/bin/catalina.sh run
