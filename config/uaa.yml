@@ -38,8 +38,22 @@ jwt:
         AvekXizi/hpTLGrp9QIDAQAB
         -----END PUBLIC KEY-----
 
+oauth:
+  # The default client override behaviour ('true' if omitted)
+  client.override: true
+
+  autoapprove:
+      - vmc
+      - my
+      - micro
+      - support-signon
+      - appdirect
+      - dashboard
+      - portal
   clients: 
       admin:
+        # Override defaults to true, so a client entry will be overwritten with the manifest details by default
+        override: false
         id: admin
         authorized-grant-types: client_credentials
         authorities: clients.read,clients.write,clients.secret,uaa.admin
@@ -54,13 +68,23 @@ jwt:
         secret: YsLuKyUCZF53kBKS 
         scope: openid,dashboard.user 
         authorities: uaa.admin,uaa.resource,tokens.read,scim.read,scim.write 
-        authorized-grant-types: client_credentials,authorization_code,refresh_token 
+        authorized-grant-types: client_credentials,authorization_code,refresh_token
+      vmc:
+        authorized-grant-types: implicit
+        scope: cloud_controller.admin,cloud_controller.read,cloud_controller.write,openid,password.write
+        authorities: uaa.none
+        id: vmc
+        redirect-uri: http://uaa.cloudfoundry.com/redirect/vmc,https://uaa.cloudfoundry.com/redirect/vmc
+        access-token-validity: 604800
   admin: 
       client_secret: MeM5fER8evgEis
   login: 
       client_secret: HZtd2FyZS5jb20iL 
-  scim: 
-      users: 
-        - b29|admin|openid,dashboard.user 
+scim: 
+  users: 
+    - b29|admin|openid,dashboard.user 
 
-  dump_requests: true
+dump_requests: true
+
+require_https: false
+
