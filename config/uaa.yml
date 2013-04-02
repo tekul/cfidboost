@@ -4,16 +4,25 @@ name: uaa
 spring_profiles: postgresql
 
 platform: postgresql
-database.driverClassName: org.postgresql.Driver
-database.url: jdbc:postgresql://127.0.0.1:5432/uaadb
-database.username: uaa
-database.password: password
+
+database:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://127.0.0.1:5432/uaadb
+  username: uaa
+  password: password
+
+
+cloud_controller:
+  database:
+    url: jdbc:postgresql://127.0.0.1:12345/foobar
+    password: "bar"
 
 logging:
   config: config/uaa-log4j.properties
 
 jwt:
-  signing_key: |
+  token:
+    signing-key: |
         -----BEGIN RSA PRIVATE KEY-----
         MIICXgIBAAKBgQDAcxw6ilnDn4FPkl21wA0H3vNyJLtsbwUTvB8Ka61wCVpnoNdI
         HQOjuCptz32VSCcjYj4djWlMBPTq0Z9svcWi3hnegk/57FFqE3crdTfu9lPZlHyx
@@ -30,7 +39,7 @@ jwt:
         q5vpbVbOxo/LoUPzeSThspSF/NlVlx6T+HCq+nVcPV3VfA==
         -----END RSA PRIVATE KEY-----
 
-  verification_key: |
+    verification-key: |
         -----BEGIN PUBLIC KEY-----
         MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAcxw6ilnDn4FPkl21wA0H3vNy
         JLtsbwUTvB8Ka61wCVpnoNdIHQOjuCptz32VSCcjYj4djWlMBPTq0Z9svcWi3hne
@@ -39,50 +48,52 @@ jwt:
         -----END PUBLIC KEY-----
 
 oauth:
-  # The default client override behaviour ('true' if omitted)
-  client.override: true
+  authorize:
+    ssl: false
 
-  autoapprove:
-      - vmc
-      - my
-      - micro
-      - support-signon
-      - appdirect
-      - dashboard
-      - portal
-  clients: 
-      admin:
+  # The default client override behaviour ('true' if omitted)
+  client:
+     override: true
+
+     autoapprove:
+        - vmc
+        - my
+        - micro
+        - support-signon
+        - appdirect
+        - dashboard
+        - portal
+  clients:
+     admin:
         # Override defaults to true, so a client entry will be overwritten with the manifest details by default
         override: false
         id: admin
         authorized-grant-types: client_credentials
         authorities: clients.read,clients.write,clients.secret,uaa.admin
         secret: MeM5fER8evgEis
-      login:
+     login:
         id: login
         secret: HZtd2FyZS5jb20iL
         authorized-grant-types: client_credentials
         authorities: oauth.login
-      dashboard: 
+     dashboard:
         id: dashboard
-        secret: YsLuKyUCZF53kBKS 
-        scope: openid,dashboard.user 
-        authorities: uaa.admin,uaa.resource,tokens.read,scim.read,scim.write 
+        secret: YsLuKyUCZF53kBKS
+        scope: openid,dashboard.user
+        authorities: uaa.admin,uaa.resource,tokens.read,scim.read,scim.write
         authorized-grant-types: client_credentials,authorization_code,refresh_token
-      vmc:
+     vmc:
         authorized-grant-types: implicit
         scope: cloud_controller.admin,cloud_controller.read,cloud_controller.write,openid,password.write
         authorities: uaa.none
         id: vmc
         redirect-uri: http://uaa.cloudfoundry.com/redirect/vmc,https://uaa.cloudfoundry.com/redirect/vmc
         access-token-validity: 604800
-  admin: 
-      client_secret: MeM5fER8evgEis
-  login: 
-      client_secret: HZtd2FyZS5jb20iL 
-scim: 
-  users: 
-    - b29|admin|openid,dashboard.user 
+
+scim:
+  user.override: false
+  users:
+    - b29|admin|openid,dashboard.user
 
 dump_requests: true
 
